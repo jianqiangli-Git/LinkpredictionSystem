@@ -1,0 +1,62 @@
+{% extends 'linkprediction/base.html' %}
+{% block title %}linkprediction-index{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'linkprediction/css/index.css' %}">
+<div class="container">
+    <div class="row">
+      <div class="col-md-8 my1">
+          <div class="row">
+              <div class="col-md-11  index-nav">
+                  {% block nav-tabs %}
+                  <ul class="nav nav-tabs " style="opacity: 0.8">
+                      <li role="presentation" class="active"><a href="#">离线训练</a></li>
+                      <li role="presentation"><a href="{% url 'linkprediction:recommend' %}">为我推荐</a></li>
+                  </ul>
+                  {% endblock nav-tabs %}
+              </div>
+          </div>
+
+          <div class="row">
+              {% block nav-details %}
+              <div class="col-md-11  index-detail" style="opacity: 0.75">
+                    <div class="center-block">
+                        <h3>为了您的提高推荐满意度，请上传观影记录文件</h3>
+                    </div>
+                    <div class="center-block">
+                        <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
+                            {% csrf_token %}
+                            <input type="file" name="myfile" value="xuaze"/>
+                            <br/>
+                            <input type="submit" value="确认上传"/>
+                        </form>
+                    </div>
+              </div>
+              {% endblock nav-details %}
+          </div>
+      </div>
+
+      <div class="col-md-4 my2" style="opacity: 0.75;">
+            {% if request.session.is_login %}
+          <div class="row touxaing">
+              <div class="col-md-12" id="touxiang">
+                  <div class="center-block-touxiang col-md-offset-4">
+                          <img style="margin-top: 10px" src="{% static 'linkprediction/images/touxiang.jpg' %}" alt=".." class="img-rounded" title="我是用户：{{ request.session.user_name }}">
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div>
+                          <hr>
+                  </div>
+              </div>
+          </div>
+            <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+            {% else %}
+            <h1>你尚未登录，只能访问公开内容！</h1>
+            {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock %}

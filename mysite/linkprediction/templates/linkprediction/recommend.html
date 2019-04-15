@@ -1,0 +1,27 @@
+{% extends 'linkprediction/index.html' %}
+{% block title %}linkprediction-index{% endblock %}
+
+{% block nav-tabs %}
+<ul class="nav nav-tabs ">
+    <li role="presentation"><a href="{% url 'linkprediction:index' %}">离线训练</a></li>
+    <li role="presentation" class="active"><a href="{% url 'linkprediction:recommend' %}">为我推荐</a></li>
+</ul>
+{% endblock nav-tabs %}
+
+{% block nav-details %}
+<div class="col-md-11  index-detail" style="opacity: 0.75">
+    <div class="center-block">
+        <h3>进行推荐之前，请先进行离线训练</h3>
+    </div>
+    <div class="center-block" style="opacity: 1.0">
+        <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
+            {% csrf_token %}
+            <p>
+            <button type="submit" class="btn btn-warning" formaction="{% url 'linkprediction:train' %}">开始离线训练</button>
+            &emsp;&emsp;
+            <button type="submit" class="btn btn-info" formaction="{% url 'linkprediction:presentation' %}">开始为我推荐</button>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock nav-details %}

@@ -1,0 +1,27 @@
+.my1{
+    top: 80px;
+}
+
+.index-nav{
+    background-color: #eeeeee;
+    border: solid #dbdbdb 2px;
+    border-radius: 5px 5px 0 0;
+}
+.index-detail{
+    background-color: #6DDCBD;
+    height: 404px;
+}
+
+.my2{
+    top: 130px;
+    height: 400px;
+    background-color: #6DDCBD;
+}
+
+.center-block {
+  display: block;
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: auto;
+}
+

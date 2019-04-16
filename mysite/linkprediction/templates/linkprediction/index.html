@@ -26,7 +26,7 @@
                     <div class="center-block">
                         <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
                             {% csrf_token %}
-                            <input type="file" name="myfile" value="xuaze"/>
+                            <input type="file" name="myfile"/>
                             <br/>
                             <input type="submit" value="确认上传"/>
                         </form>

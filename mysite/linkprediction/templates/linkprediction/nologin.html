@@ -10,17 +10,17 @@
 {% endblock nav-tabs %}
 
 {% block nav-details %}
-<div class="col-md-11  index-detail" style="opacity: 0.75;overflow: scroll">
+<div class="col-md-11  index-detail" style="opacity: 0.75;overflow-x: hidden">
     <div class="row">
-        <div class="col-md-3" style="border: 2px solid #e4b9c0">
+        <div class="col-md-3">
             <a href="#" class="thumbnail">
                 <img src="{% static 'linkprediction/images/1.jpg' %}" alt="...">
             </a>
         </div>
-        <div class="col-md-8" style="border: 2px solid #e4b9c0">
+        <div class="col-md-8">
             <p>
                电影名称:
-            </p>
+            </p>o
             <p>
                 电影类型:
             </p>
@@ -45,12 +45,12 @@
         <hr>
     </div>
     <div class="row">
-        <div class="col-md-3" style="border: 2px solid #e4b9c0">
+        <div class="col-md-3">
             <a href="#" class="thumbnail">
                 <img src="{% static 'linkprediction/images/2.jpg' %}" alt="...">
             </a>
         </div>
-        <div class="col-md-8" style="border: 2px solid #e4b9c0">
+        <div class="col-md-8">
             <p>
                你好
             </p>
@@ -78,12 +78,12 @@
         <hr>
     </div>
     <div class="row">
-        <div class="col-md-3" style="border: 2px solid #e4b9c0">
+        <div class="col-md-3">
             <a href="#" class="thumbnail">
                 <img src="{% static 'linkprediction/images/3.jpg' %}" alt="...">
             </a>
         </div>
-        <div class="col-md-8" style="border: 2px solid #e4b9c0">
+        <div class="col-md-8">
             <p>
                你好
             </p>
@@ -111,38 +111,35 @@
         <hr>
     </div>
 </div>
-
 {% endblock nav-details %}
+
 {% block userinfo %}
-
-            {% if request.session.is_login %}
-          <div class="row touxaing">
-              <div class="col-md-12" id="touxiang">
-                  <div class="center-block-touxiang col-md-offset-4">
-                          <img style="margin-top: 10px" src="{% static 'linkprediction/images/touxiang.jpg' %}" alt=".." class="img-rounded" title="我是用户：{{ request.session.user_name }}">
-                  </div>
+      {% if request.session.is_login %}
+      <div class="row touxaing">
+          <div class="col-md-12" id="touxiang">
+              <div class="center-block-touxiang col-md-offset-4">
+                      <img style="margin-top: 10px" src="{% static 'linkprediction/images/touxiang.jpg' %}" alt=".." class="img-rounded" title="我是用户：{{ request.session.user_name }}">
               </div>
           </div>
-          <div class="row">
-              <div class="col-md-12">
-                  <div>
-                          <hr>
-                  </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div>
+                      <hr>
               </div>
           </div>
-            <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
-            {% else %}
-            <h2>你尚未登录，只能访问公开内容！请先登录</h2>
-            <br><br><br>
-            <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
-            {% csrf_token %}
-                <p>
-                    <button type="submit" class="btn btn-success" formaction="{% url 'linkprediction:login' %}" style="margin-left: 35%">现在登录</button>
-                </p>
-            </form>
-
-            {% endif %}
-
-    </div>
-</div>
+      </div>
+      <div>
+          <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+          {% else %}
+          <h2>你尚未登录，只能访问公开内容！请先登录</h2>
+          <br><br><br>
+          <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
+          {% csrf_token %}
+              <p>
+                  <button type="submit" class="btn btn-success" formaction="{% url 'linkprediction:login' %}" style="margin-left: 35%">现在登录</button>
+              </p>
+          </form>
+          {% endif %}
+      </div>
 {% endblock userinfo %}

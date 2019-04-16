@@ -9,13 +9,17 @@ from django.utils import timezone
 # A Choice has two fields: the text of the choice and a vote tally. Each Choice is associated with a Question.
 
 class Tag(models.Model):
-    tag = models.CharField(max_length=10)
+    tag_name = models.CharField(max_length=20,null=True)
 
     def __str__(self):
-        return self.tag
+        return self.tag_name
 
 class Occupation(models.Model):
+    id = models.CharField(max_length=4,primary_key=True)
     discription = models.CharField(max_length=20,verbose_name='职业')
+
+    def __str__(self):
+        return self.id
 
 # - Age is chosen from the following ranges:
 # 	*  1:  "Under 18"
@@ -26,7 +30,7 @@ class Occupation(models.Model):
 # 	* 50:  "50-55"
 # 	* 56:  "56+"
 class Range(models.Model):
-    age = models.PositiveIntegerField(max_length=10,verbose_name='年龄')
+    age = models.PositiveIntegerField(verbose_name='年龄')
     description = models.CharField(max_length=10,verbose_name='年龄区间')
 
     def __str__(self):

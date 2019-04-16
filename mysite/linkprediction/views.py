@@ -7,6 +7,7 @@ from django.shortcuts import render,get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from . import models
+import os
 
 def index(request):
     return render(request,'linkprediction/index.html')
@@ -49,7 +50,24 @@ def logout_action(request):
     return render(request,'linkprediction/nologin.html')
 
 def upload_action(request):
-    return HttpResponse("我已经收到上传的文件啦~")
+    if request.method == 'POST':  # 获取对象
+        content = request.FILES.get('myfile')
+        print(content.name)
+        if content.name == 'movies.dat':
+            return redirect('linkprediction:movies_process')
+        elif content.name == 'users.dat':
+            return redirect('linkprediction:users_process')
+        else:
+            return redirect('linkprediction:ratings_process')
+
+def movies_process(request):
+    return render(request, 'linkprediction/processResult.html')
+
+def users_process(request):
+    return render(request,'linkprediction/processResult.html')
+
+def ratings_process(request):
+    return render(request, 'linkprediction/processResult.html')
 
 def recommend(request):
     return render(request,'linkprediction/recommend.html')

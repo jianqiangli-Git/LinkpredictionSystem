@@ -8,12 +8,15 @@ app_name = 'linkprediction'
 # 然后定向到对应的view 函数，然后执行函数展示函数对应的页面
 urlpatterns = [
     path(r'',views.login,name='login'),
-    path(r'^index/$',views.index,name='index'),
-    path(r'^logout/$',views.logout,name='logout'),
-    path(r'^upload',views.upload_action,name='upload_action'),
-    path(r'^recommend',views.recommend,name='recommend'),
-    path(r'^train',views.train,name='train'),
-    path(r'^presentation',views.presentation,name='presentation'),
-    path(r'^logout_action',views.logout_action,name='logout_action')
+    path(r'index',views.index,name='index'),
+    path(r'logout',views.logout,name='logout'),
+    path(r'upload',views.upload_action,name='upload_action'),
+    path(r'recommend',views.recommend,name='recommend'),
+    path(r'train',views.train,name='train'),
+    path(r'presentation',views.presentation,name='presentation'),
+    path(r'logout_action',views.logout_action,name='logout_action'),
+    path(r'movies_process',views.movies_process,name='movies_process'),
+    path(r'users_process',views.users_process,name='users_process'),
+    path(r'ratings_process',views.ratings_process,name='ratings_process')
 ]
 

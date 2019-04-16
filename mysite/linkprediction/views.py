@@ -17,7 +17,7 @@ def login(request):
         return redirect('linkprediction:index')
 
     if request.method == "POST":
-        username = request.POST.get('username','USERNAME')
+        username = request.POST.get('username',None)
         password = request.POST.get('password','PASSWARD')
         message = None
         if username and password:
@@ -41,9 +41,12 @@ def login(request):
 def logout(request):
     if not request.session.get('is_login', None):
         # 如果本来就未登录，也就没有登出一说
-        return redirect('linkprediction:index')
+        return redirect('linkprediction:logout_action')
     request.session.flush()
-    return redirect('linkprediction:index')
+    return redirect('linkprediction:logout_action')
+
+def logout_action(request):
+    return render(request,'linkprediction/nologin.html')
 
 def upload_action(request):
     return HttpResponse("我已经收到上传的文件啦~")

@@ -37,6 +37,7 @@
       </div>
 
       <div class="col-md-4 my2" style="opacity: 0.75;">
+          {% block userinfo %}
             {% if request.session.is_login %}
           <div class="row touxaing">
               <div class="col-md-12" id="touxiang">
@@ -54,8 +55,16 @@
           </div>
             <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
             {% else %}
-            <h1>你尚未登录，只能访问公开内容！</h1>
+            <h2>你尚未登录，只能访问公开内容！请先登录</h2>
+            <br><br><br>
+            <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
+            {% csrf_token %}
+                <p>
+                    <button type="submit" class="btn btn-success" formaction="{% url 'linkprediction:login' %}" style="margin-left: 35%">现在登录</button>
+                </p>
+            </form>
             {% endif %}
+          {% endblock userinfo %}
       </div>
     </div>
 </div>

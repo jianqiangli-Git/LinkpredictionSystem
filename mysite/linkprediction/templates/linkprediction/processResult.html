@@ -4,7 +4,11 @@
 {% block nav-details %}
 <div class="col-md-11  index-detail" style="opacity: 0.75">
     <div class="center-block" style="margin-left: 37%">
-        <h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;文件上传完成!</h3>
+        {% if message %}
+        <h3><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;{{message}}</h3>
+        {% else %}
+        <h3><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;没有上传文件！</h3>
+        {% endif %}
     </div>
 </div>
 {% endblock nav-details %}

@@ -52,25 +52,44 @@ def logout_action(request):
 def upload_action(request):
     if request.method == 'POST':  # 获取对象
         content = request.FILES.get('myfile')
-        print(content.name)
-        if content.name == 'movies.dat':
+        if content == None:
+            return redirect('linkprediction:none_process')
+        elif content.name == 'movies.dat':
             return redirect('linkprediction:movies_process')
         elif content.name == 'users.dat':
             return redirect('linkprediction:users_process')
-        else:
+        elif content.name == 'ratings.dat':
             return redirect('linkprediction:ratings_process')
+        else:
+            return redirect('linkprediction:other_process')
+
 
 def movies_process(request):
-    return render(request, 'linkprediction/processResult.html')
+    message = '文件上传完成！'
+    info = {'message':message}
+    return render(request, 'linkprediction/processResult.html',info)
 
 def users_process(request):
-    return render(request,'linkprediction/processResult.html')
+    message = '文件上传完成！'
+    info = {'message':message}
+    return render(request,'linkprediction/processResult.html',info)
 
 def ratings_process(request):
+    message = '文件上传完成！'
+    info = {'message':message}
+    return render(request, 'linkprediction/processResult.html',info)
+
+def none_process(request):
     return render(request, 'linkprediction/processResult.html')
+
+def other_process(request):
+    message = '你上传了其他文件！'
+    info = {'message':message}
+    return render(request, 'linkprediction/processResult.html',info)
 
 def recommend(request):
     return render(request,'linkprediction/recommend.html')
+
 
 # 处理前端开始训练的请求
 def train(request):

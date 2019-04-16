@@ -17,6 +17,8 @@ urlpatterns = [
     path(r'logout_action',views.logout_action,name='logout_action'),
     path(r'movies_process',views.movies_process,name='movies_process'),
     path(r'users_process',views.users_process,name='users_process'),
-    path(r'ratings_process',views.ratings_process,name='ratings_process')
+    path(r'ratings_process',views.ratings_process,name='ratings_process'),
+    path(r'other_process',views.other_process,name='other_process'),
+    path(r'none_process',views.none_process,name='none_process'),
 ]
 

@@ -10,5 +10,16 @@
         <h3><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;没有上传文件！</h3>
         {% endif %}
     </div>
+    <br><br><br>
+    <div>
+    <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post" style="margin-left: 36%">
+            {% csrf_token %}
+            <p>
+            <button type="submit" class="btn btn-warning" formaction="{% url 'linkprediction:index' %}">继续上传</button>
+            &emsp;&emsp;
+            <button type="submit" class="btn btn-info" formaction="{% url 'linkprediction:recommend' %}">不再上传</button>
+            </p>
+        </form>
+    </div>
 </div>
 {% endblock nav-details %}

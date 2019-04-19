@@ -26,7 +26,7 @@
                     <div class="center-block">
                         <form enctype="multipart/form-data" action="{% url 'linkprediction:upload_action' %}" method="post">
                             {% csrf_token %}
-                            <input type="file" name="myfile"/>
+                            <input type="file"  name="myfile"/>
                             <br/>
                             <input type="submit" value="确认上传"/>
                         </form>
@@ -53,7 +53,11 @@
                   </div>
               </div>
           </div>
-            <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+            <h4>用户：{{ request.session.user_name }}</h4>
+            <h4>性别：男</h4>
+            <h4>年龄：18</h4>
+            <h4>职业：Wtiter</h4>
+            <h4>看过的电影：《Toy Story》</h4>
             {% else %}
             <h2>你尚未登录，只能访问公开内容！请先登录</h2>
             <br><br><br>

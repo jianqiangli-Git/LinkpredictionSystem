@@ -14,12 +14,20 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_name
 
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = verbose_name
+
 class Occupation(models.Model):
     id = models.CharField(max_length=4,primary_key=True)
     discription = models.CharField(max_length=20,verbose_name='职业')
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name = '职业'
+        verbose_name_plural = verbose_name
 
 # - Age is chosen from the following ranges:
 # 	*  1:  "Under 18"
@@ -36,14 +44,22 @@ class Range(models.Model):
     def __str__(self):
         return str(self.age)
 
+    class Meta:
+        verbose_name = '年龄'
+        verbose_name_plural = verbose_name
+
 class Movie(models.Model):
-    # movieID = models.IntegerField(primary_key=True,verbose_name='电影ID')
+    # movieID = models.CharField(max_length=4,primary_key=True,verbose_name='电影ID',db_index=True)
     name = models.CharField(max_length=10,verbose_name='电影名')
     tags = models.ForeignKey(Tag,verbose_name="电影类别",null=True,on_delete=models.SET_NULL)
-    abstract = models.TextField(blank=True,null=True,verbose_name="简介")
+    abstract = models.TextField(blank=True,null=True,verbose_name="简介",default="这个电影没有简介~")
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '电影'
+        verbose_name_plural = verbose_name
 
 class User(models.Model):
     # userID = models.IntegerField(primary_key=True,verbose_name="用户ID")
@@ -53,15 +69,23 @@ class User(models.Model):
     sex = models.CharField(max_length=4,verbose_name="性别",choices=gender)
     ageRange = models.ForeignKey(Range,verbose_name="年龄区间",null=True,on_delete=models.SET_NULL)
     occupation = models.ForeignKey(Occupation,verbose_name="职业",null=True,on_delete=models.SET_NULL)
-    movies = models.ManyToManyField(Movie,through='Rating',verbose_name='看过的电影')
 
+    movies = models.ManyToManyField(Movie,through='Rating',verbose_name='看过的电影')
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
 
 class Rating(models.Model):
     user = models.ForeignKey(User,verbose_name='用户',null=True,on_delete=models.SET_NULL)
     movie = models.ForeignKey(Movie,verbose_name='电影',null=True,on_delete=models.SET_NULL)
     rating = models.PositiveIntegerField(verbose_name='评分')
+
+    class Meta:
+        verbose_name = '评分'
+        verbose_name_plural = verbose_name
 
 
 

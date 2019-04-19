@@ -9,6 +9,8 @@ from django.views import generic
 from . import models
 import os
 
+content = None
+
 def index(request):
     return render(request,'linkprediction/index.html')
 
@@ -50,42 +52,35 @@ def logout_action(request):
     return render(request,'linkprediction/nologin.html')
 
 def upload_action(request):
+    message = '文件上传完成！'
+    info = {'message': message}
     if request.method == 'POST':  # 获取对象
         content = request.FILES.get('myfile')
         if content == None:
-            return redirect('linkprediction:none_process')
+            return render(request, 'linkprediction/processResult.html')
         elif content.name == 'movies.dat':
-            return redirect('linkprediction:movies_process')
+            # for m in content.chunks():
+            #     data = m.decode().strip().split("::")
+            #     movieID = data[0]
+            #     temp = data[1].split("(")
+            #     name = temp[0]
+            #     tags = data[2].split("|")
+            #     models.Movie.objects.bulk_create([models.Movie(name=name,tags=models.Tag.objects.get(tag_name=tags[i])) for i in range(len(tags))])
+            return render(request, 'linkprediction/processResult.html', info)
         elif content.name == 'users.dat':
-            return redirect('linkprediction:users_process')
+            for i in content:
+                data = i.strip().split("::")
+                name = data[0]
+                pwd = data[0]
+                gender =  lambda x:'male' if x=='M' else 'female'
+                sex = gender(data[1])
+            return render(request, 'linkprediction/processResult.html', info)
         elif content.name == 'ratings.dat':
-            return redirect('linkprediction:ratings_process')
+            return render(request, 'linkprediction/processResult.html', info)
         else:
-            return redirect('linkprediction:other_process')
+            info['message'] = '你上传了其他文件！'
+            return render(request, 'linkprediction/processResult.html', info)
 
-
-def movies_process(request):
-    message = '文件上传完成！'
-    info = {'message':message}
-    return render(request, 'linkprediction/processResult.html',info)
-
-def users_process(request):
-    message = '文件上传完成！'
-    info = {'message':message}
-    return render(request,'linkprediction/processResult.html',info)
-
-def ratings_process(request):
-    message = '文件上传完成！'
-    info = {'message':message}
-    return render(request, 'linkprediction/processResult.html',info)
-
-def none_process(request):
-    return render(request, 'linkprediction/processResult.html')
-
-def other_process(request):
-    message = '你上传了其他文件！'
-    info = {'message':message}
-    return render(request, 'linkprediction/processResult.html',info)
 
 def recommend(request):
     return render(request,'linkprediction/recommend.html')
@@ -95,6 +90,7 @@ def recommend(request):
 def train(request):
     return HttpResponse("好的，我开始训练，将要获得当前节点 TopK 个节点~")
 
+# 接收训练结果产生的前top K 个节点，使用 result.html 渲染到前端
 def presentation(request):
     return render(request,'linkprediction/result.html')
     # return HttpResponse("好的，我开始执行推荐算法，展示 TopK 个节点的电影信息")

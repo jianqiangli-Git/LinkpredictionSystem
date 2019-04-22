@@ -58,24 +58,84 @@ def upload_action(request):
         content = request.FILES.get('myfile')
         if content == None:
             return render(request, 'linkprediction/processResult.html')
+        elif content.name == 'age.txt':
+            with open(r'F:\myweb\env\movilens\million-ml-data\age.txt') as f:
+                while (1):
+                    data = f.readline()
+                    if data != "":
+                        data = data.strip().split(":")
+                        age = data[0]
+                        description = data[1]
+                        # print(age, description)
+                        models.Range.objects.bulk_create([models.Range(age=age, description=description)])
+                    else:
+                        break
+            return render(request, 'linkprediction/processResult.html', info)
+        elif content.name == 'occupation.txt':
+            with open(r'F:\myweb\env\movilens\million-ml-data\occupation.txt') as f:
+                while (1):
+                    data = f.readline()
+                    if data != "":
+                        data = data.strip().split(":")
+                        id = data[0]
+                        discription = data[1]
+                        models.Occupation.objects.bulk_create([models.Occupation(id=id, discription=discription)])
+                    else:
+                        break
+            return render(request, 'linkprediction/processResult.html', info)
+        elif content.name == 'tag.txt':
+            with open(r'F:\myweb\env\movilens\million-ml-data\tag.txt') as f:
+                while (1):
+                    data = f.readline()
+                    if data != "":
+                        name = data.strip()
+                        models.Tag.objects.bulk_create([models.Tag(tag_name=name)])
+                    else:
+                        break
+            return render(request, 'linkprediction/processResult.html', info)
+
         elif content.name == 'movies.dat':
-            # for m in content.chunks():
-            #     data = m.decode().strip().split("::")
-            #     movieID = data[0]
-            #     temp = data[1].split("(")
-            #     name = temp[0]
-            #     tags = data[2].split("|")
-            #     models.Movie.objects.bulk_create([models.Movie(name=name,tags=models.Tag.objects.get(tag_name=tags[i])) for i in range(len(tags))])
+            with open(r'F:\myweb\env\mysite\million-ml-data\movies.dat') as f:
+                while(1):
+                    data = f.readline()
+                    if data != '':
+                        data = data.strip().split("::")
+                        mid = data[0]
+                        temp = data[1].split("(")
+                        name = temp[0]
+                        tags = data[2].split("|")
+                        for i in range(len(tags)):
+                            models.Movie.objects.create(mid=mid,name=name,tags=models.Tag.objects.get(tag_name=tags[i]))
+                    else:
+                        break
             return render(request, 'linkprediction/processResult.html', info)
         elif content.name == 'users.dat':
-            for i in content:
-                data = i.strip().split("::")
-                name = data[0]
-                pwd = data[0]
-                gender =  lambda x:'male' if x=='M' else 'female'
-                sex = gender(data[1])
+            with open(r'F:\myweb\env\mysite\million-ml-data\users.dat') as f:
+                while(1):
+                    data = f.readline().strip().split("::")
+                    if data != '':
+                        name = data[0]
+                        password = name
+                        sex = data[1]
+                        ageRange = data[2]
+                        occupation = data[3]
+                        models.User.objects.create(name=name,password = password,sex = sex,ageRange=models.Range.objects.get(age=ageRange),occupation=models.Occupation.objects.get(id=occupation))
+                    else:
+                        break
             return render(request, 'linkprediction/processResult.html', info)
         elif content.name == 'ratings.dat':
+            with open(r'F:\myweb\env\mysite\million-ml-data\ratings.dat') as f:
+                while (1):
+                    data = f.readline()
+                    if data != '':
+                        data = data.strip().split(" ")
+                        #UserID::MovieID::Rating:
+                        uid = data[0]
+                        mid = data[1]
+                        rating = data[2]
+                        models.Rating.objects.create(user=models.User.objects.get(name=uid),movie=models.Movie.objects.filter(mid=mid)[0],rating=rating)
+                    else:
+                        break
             return render(request, 'linkprediction/processResult.html', info)
         else:
             info['message'] = '你上传了其他文件！'

@@ -2,7 +2,7 @@ from django.db import models
 
 import datetime 
 from django.utils import timezone
-
+import random
 # Create your models here.
 # A model is the single, definitive source of truth about your data
 # In our simple poll app, we’ll create two models: Question and Choice. A Question has a question and a publication date. 
@@ -19,7 +19,7 @@ class Tag(models.Model):
         verbose_name_plural = verbose_name
 
 class Occupation(models.Model):
-    id = models.CharField(max_length=4,primary_key=True)
+    id = models.IntegerField(primary_key=True,default=1)
     discription = models.CharField(max_length=20,verbose_name='职业')
 
     def __str__(self):
@@ -49,10 +49,10 @@ class Range(models.Model):
         verbose_name_plural = verbose_name
 
 class Movie(models.Model):
-    # movieID = models.CharField(max_length=4,primary_key=True,verbose_name='电影ID',db_index=True)
-    name = models.CharField(max_length=10,verbose_name='电影名')
+    name = models.CharField(max_length=20,verbose_name='电影名')
+    mid = models.CharField(max_length=10, verbose_name="电影序号")
     tags = models.ForeignKey(Tag,verbose_name="电影类别",null=True,on_delete=models.SET_NULL)
-    abstract = models.TextField(blank=True,null=True,verbose_name="简介",default="这个电影没有简介~")
+    abstract = models.TextField(blank=True,null=True,verbose_name="简介",default="这个电影还没有简介~")
 
     def __str__(self):
         return self.name
@@ -62,7 +62,6 @@ class Movie(models.Model):
         verbose_name_plural = verbose_name
 
 class User(models.Model):
-    # userID = models.IntegerField(primary_key=True,verbose_name="用户ID")
     name = models.CharField(max_length=128, verbose_name='姓名')
     password = models.CharField(max_length=256,verbose_name='密码')
     gender = (('male','男'),('female','女'))
